@@ -18,21 +18,105 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: danbiilee
+
+
+
+title: "danbiilee"
+name: "db"
 email: danbi.db@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+description: "초보 개발자의 블로그"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://danbiilee.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  danbiilee
+#teaser: 
+#logo: 사이트 로고 
+#og_image: 글이 링크될 때 기본으로 적용될 이미지를 지정
+comments:
+  provider               : # 블로그 댓글 기능 false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "custom"
+  disqus:
+    shortname            : # 블로그 댓글 기능 https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
+  discourse:
+    server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
+  facebook:
+    # https://developers.facebook.com/docs/plugins/comments
+    appid                :
+    num_posts            : # 5 (default)
+    colorscheme          : # "light" (default), "dark"
+  utterances:
+    theme                : # "github-light" (default), "github-dark"
+    issue_term           : # "pathname" (default)
+
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
+
+
+# Analytics
+analytics:
+  provider               : false # 구글 어날리틱스 등록 false (default), "google", "google-universal", "custom"
+  google:
+    tracking_id          :
+    anonymize_ip         : # true, false (default)
+
+
+# Site Author
+author:
+  name : "danbiilee"
+  avatar: ""
+  bio: "초보 개발자"
+  location: "South Korea"
+  email: "danbi.db@gmail.com"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: mailto:devinlifeidea@gmail.com
+    - label: "GitHub"
+      icon: "fas fa-fw fa-link"
+      url: "https://danbiilee.github.io/"
+
+
+# Site Footer
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/danbiilee"
+
+
+# Outputting
+permalink: /:categories/:title/
+paginate: 1
+paginate_path: /page:num/
+timezone: Asia/Seoul # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones   
+
+
+#Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true # 블로그 댓글 기능 
+      share: true
+      related: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      read_time: false
+      comments: false # 블로그 댓글 기능 
+      share: true
+      related: false
+
+
 
 # Archives
 category_archive:
@@ -41,6 +125,9 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
