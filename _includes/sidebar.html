@@ -26,10 +26,14 @@
 
         {% if node.layout == "category" %}
           <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"
-          href="{{ site.baseurl }}{{ node.url }}">
+          href="{{ node.url | absolute_url }}">
           {{ node.title }}
           <!-- <span class="badge">{{ category | last | size }}</span> //게시글 수 -->
           </a>
+          <!-- <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"
+          href="{{ site.baseurl }}{{ node.url }}">
+          {{ node.title }}
+          </a> -->
         {% endif %}
 
       {% endif %}

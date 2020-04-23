@@ -27,6 +27,7 @@ email: danbi.db@gmail.com
 description: "초보 개발자의 블로그"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://danbiilee.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+github.repo: "https://github.com/danbiilee"
 #teaser: 
 #logo: 사이트 로고 
 #og_image: 글이 링크될 때 기본으로 적용될 이미지를 지정
@@ -44,9 +45,6 @@ comments:
   utterances:
     theme                : # "github-light" (default), "github-dark"
     issue_term           : # "pathname" (default)
-# category_list: [ TIL ]
-# category_dir: category/
-# tag_dir: tag/
 
 
 # Build settings
@@ -96,18 +94,18 @@ author:
 
 
 #Defaults
-# defaults:
-#   # _posts
-#   - scope:
-#       path: ""
-#       type: posts
-#     values:
-#       layout: single
-#       author_profile: true
-#       read_time: true
-#       comments: true # 블로그 댓글 기능 
-#       share: true
-#       related: true
+defaults:
+  # _posts
+  - scope:
+      path: "" # an empty string here means all files
+      type: "posts"
+    values:
+      layout: "post"
+      author_profile: true
+      read_time: true
+      comments: true # 블로그 댓글 기능 
+      share: true
+      related: true
 #   # _pages
 #   - scope:
 #       path: ""
@@ -119,16 +117,6 @@ author:
 #       comments: false # 블로그 댓글 기능 
 #       share: true
 #       related: false
-
-
-
-# Archives
-# category_archive:
-#   type: liquid
-#   path: /categories/
-# tag_archive:
-#   type: liquid
-#   path: /tags/
 
 
 
