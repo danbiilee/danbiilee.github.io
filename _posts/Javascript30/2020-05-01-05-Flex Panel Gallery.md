@@ -6,7 +6,7 @@ category: Javascript30
 
 ## 공부
 ### 1. CSS 
-- box-sizing : border-box;
+- box-sizing : border-box; -> 이 값을 *, *:before, *:after에도 해주는 이유는? 
 - display: flex;
 - flex, flex-direction 속성 
 - transition속성
