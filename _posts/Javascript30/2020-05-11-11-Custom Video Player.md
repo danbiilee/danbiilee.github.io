@@ -31,8 +31,10 @@ fullscreen일 때만 적용되는 CSS 가상 클래스.
 }
 ```
 
-#### 1.5 cursor: ew-resize
+#### 1.4 cursor: ew-resize
 해당 요소에 마우스 호버하면 커서가 좌우 화살표(?)로 바뀐다.
+
+
 
 
 
@@ -53,12 +55,29 @@ video[method](); // video.play() 혹은 video.pause()
 
 - timeupdate
 
-비디오의 재생 위치가 변경될 때 `timeupdate` 이벤트가 발생한다. 
+비디오의 재생 위치가 변경될 때 `timeupdate` 이벤트가 발생한다.
 
 
 
-#### 2.2 문법!? 
-`mousedown`이 참인 경우에 `scrub` 함수를 실행한다.   
+
+#### 2.2 동영상 풀스크린
+비디오 요소의 컨테이너에 `requestFullScreen()` 을 사용한다. 
+
+```javascript
+player.requestFullscreen();
+```
+
+풀스크린을 해제할 때는 document 객체에 `exitFullScreen()`을 사용한다. 
+
+```javascript
+document.exitFullScreen();
+```
+
+
+
+
+#### 2.3 문법!? 
+`mousedown`이 참인 경우에만 `scrub` 함수를 실행한다.   
 
 ```javascript
 progress.addEventListener('mousemove', (e) => mousedown && scrub(e)); 
@@ -66,11 +85,38 @@ progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 
 
 
+#### 2.4 querySelector
+```html
+<div class="player">
+	<video class="viewer"></video>
+</div>
+```
+HTML 구조가 위와 같다면 `document.querySelector()` 대신 아래와 같이 부모 요소인 player를 기준으로 자식 요소를 선택해도 된다.   
+
+```javascript
+const player = document.querySelector('.player');
+const video = player.querySelector('.viewer');
+```
+
+
+
+
 
 
 ## 정리
 1. 비디오 혹은 플레이 버튼을 클릭하면 `togglePlay` 콜백함수가 호출되어 영상이 재생/정지 되고, 재생/정지될 때마다 `updateButton` 콜백함수에 의해 플레이버튼의 아이콘이 변경된다. 
-2. 비디오의 재생 위치가 변경될 때 `timeupdate` 이벤트가 발생, `handleProgress` 콜백함수를 호출하여 재생바의 너비를 %기준으로 현재 영상의 위치만큼 조절한다. 
+   - 단순히 클릭에 의해서만 아니라 다른 방법들로 영상이 재생/정지될 수 있으므로 `updateButton` 함수는 `click` 이벤트로 묶여있는 `togglePlay` 함수와는 분리하는 것이 좋다. 
+2. 비디오가 재생될 때 `timeupdate` 이벤트가 발생, 이 때 `handleProgress` 콜백함수를 호출하여 영상 시간 대비 현재 재생 위치를 %기준으로 환산해 영상의 너비를 조절한다. 
+
+```javascript
+progressBar.style.flexBasis = `${(video.currentTime / video.duration) * 100}`;
+```
+
 3. 스킵버튼을 클릭하면 `skip` 콜백함수가 호출되어 영상의 재생위치가 변경된다. 
-	- DOM에서 스킵버튼에 `data-skip` 속성을 지정한 후 스크립트에서 `dataset.skip`으로 skip data를 핸들링한다. 
-4. 재생바로 영상의 위치를 변경하는 경우 재생바를 클릭하거나 flag변수를 이용해 `mousedown`이 `true`인 경우에만 `srub` 콜백함수를 실행해 재생바의 크기만큼 영상의 재생시간을 변경한다.
+	- DOM에서 스킵버튼에 `data-skip` 속성을 지정한 후 스크립트에서 `this.dataset.skip`으로 skip data를 핸들링한다. 
+4. 재생바를 직접 움직여 영상의 재생위치를 변경할 땐 `click`과 `mousemove` 이벤트를 이용한다. `mousemove`인 경우엔 flag변수 `mousedown`이 `true`일 때만 `srub` 콜백함수를 실행한다.    
+아래 코드와 같이 영상너비(`offsetWidth`) 대비 내가 클릭한 재생바의 위치(`offsetX`)만큼 비디오 영상의 시간을 구해 대입한다. 
+
+```javascript
+video.currentTime = (e.offsetX / progress.offsetWidth) * video.duration;
+```
