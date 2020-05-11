@@ -25,7 +25,7 @@ fullscreen일 때만 적용되는 CSS 가상 클래스.
 `auto`값이 아닌 `flex-basis`속성과 `width`(`flex-direction: column`인 경우 `height`)값을 동시에 적용한 경우 `flex-basis`속성이 우선 적용된다. 
 
 ```css
-/* 그럼 아래는 flex-item에 width: 100% 하려는 의도!?  */
+/* 그럼 아래는 flex-item에 width: 100% 하려는 거!?  */
 .progress{ 
 	flex-basis: 100%;
 }
@@ -37,7 +37,10 @@ fullscreen일 때만 적용되는 CSS 가상 클래스.
 
 
 ### 2. JS
-#### 2.1 video 태그 다루기
+#### 2.1 video 태그의 이벤트
+- play
+- pause
+  
 영상이 정지 상태면 `play()` 메서드를, 재생 상태면 `pause()` 메서드를 실행한다. 
 
 ```javascript
@@ -45,4 +48,29 @@ const method = video.paused ? 'play' : 'pause';
 video[method](); // video.play() 혹은 video.pause()
 ```
 
-`play()` 메서드가 실행되면 영상에 `play` 이벤트가 발생하고, `pause()` 메서드가 실행되면 `pause` 이벤트가 발생한다. 
+`play()` 메서드가 실행되면 영상에 `play` 이벤트가 발생하고, `pause()` 메서드가 실행되면 `pause` 이벤트가 발생한다.   
+
+
+- timeupdate
+
+비디오의 재생 위치가 변경될 때 `timeupdate` 이벤트가 발생한다. 
+
+
+
+#### 2.2 문법!? 
+`mousedown`이 참인 경우에 `scrub` 함수를 실행한다.   
+
+```javascript
+progress.addEventListener('mousemove', (e) => mousedown && scrub(e)); 
+```
+
+
+
+
+
+## 정리
+1. 비디오 혹은 플레이 버튼을 클릭하면 `togglePlay` 콜백함수가 호출되어 영상이 재생/정지 되고, 재생/정지될 때마다 `updateButton` 콜백함수에 의해 플레이버튼의 아이콘이 변경된다. 
+2. 비디오의 재생 위치가 변경될 때 `timeupdate` 이벤트가 발생, `handleProgress` 콜백함수를 호출하여 재생바의 너비를 %기준으로 현재 영상의 위치만큼 조절한다. 
+3. 스킵버튼을 클릭하면 `skip` 콜백함수가 호출되어 영상의 재생위치가 변경된다. 
+	- DOM에서 스킵버튼에 `data-skip` 속성을 지정한 후 스크립트에서 `dataset.skip`으로 skip data를 핸들링한다. 
+4. 재생바로 영상의 위치를 변경하는 경우 재생바를 클릭하거나 flag변수를 이용해 `mousedown`이 `true`인 경우에만 `srub` 콜백함수를 실행해 재생바의 크기만큼 영상의 재생시간을 변경한다.
