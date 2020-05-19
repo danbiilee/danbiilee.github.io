@@ -21,10 +21,11 @@
 
 
 
-title: "danbiilee"
+title: "dbiilee"
+#tagline: "???"
 name: "db"
 email: danbi.db@gmail.com
-description: "초보 개발자의 블로그"
+description: "삐약삐약"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://danbiilee.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github.repo: "https://github.com/danbiilee"
