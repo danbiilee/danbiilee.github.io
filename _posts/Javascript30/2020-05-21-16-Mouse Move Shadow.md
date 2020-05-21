@@ -8,7 +8,7 @@ category: Javascript30
 ### 1. HTML / CSS
 #### 1.1 contenteditable 속성 
 HTML태그의 속성으로 `contenteditable`을 지정하면 브라우저에서 해당 요소의 텍스트를 수정할 수 있게 된다.   
-값은 `true` 혹은 `false`, `true`일 때는 생략이 가능하다. 
+boolean값을 갖고, `true`일 때는 생략이 가능하다. 
 
 ```html
 <h1 contenteditable>🔥WOAH!</h1>
@@ -44,3 +44,22 @@ const { offsetWidth: width, offsetHeight: height } = hero;
 console.log(offsetWidth, offsetHeight); // Uncaught ReferenceError: offsetWidth is not defined
 console.log(width, height); // 편-안
 ```
+
+#### 2.2 this와 e.target의 차이
+이벤트 리스너의 콜백함수 안에서 `this`는 언제나 해당 이벤트 리스너가 더해진 요소이고, `e.target`은 실제로 그 이벤트가 발생되고 있는(triggered) 요소이므로 그 타겟은 동작에 따라 바뀔 수 있다. 
+
+```javascript
+function shadow(e) {
+	let { offsetX: x, offsetY: y } = e;
+
+	// h1태그 위에서 x,y는 hero가 아니라 h1태그 기준이기 때문에 h1태그 왼쪽 모서리에서 갑자기 0,0이 찍히게 됨
+	// e.target이 h1태그일 경우엔 0,0에 브라우저에서부터 떨어져있는 거리를 더해줘야 한다. 
+	if (this !== e.target) { 
+		x = x + e.target.offsetLeft;
+		y = y + e.target.offsetTop;
+	}
+}
+hero.addEventListener('mousemove', shadow);
+```
+
+
